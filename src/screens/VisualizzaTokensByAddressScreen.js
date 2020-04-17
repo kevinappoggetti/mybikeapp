@@ -1,15 +1,14 @@
 import React from 'react'
 import {View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
 import BiciclettaCard from '../components/BiciclettaCard';
+import ScanScreen from './ScanScreen';
 
 const VisualizzaTokensByAddressScreen = ({navigation})=>{
   const walletAddress = navigation.getParam('walletAddress');
   const idBicicletta=Math.floor(Math.random()*100)+1;
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Token dell'address:</Text>
-      <Text style={styles.subtitle}>{walletAddress}</Text>
-      <BiciclettaCard />
+      <ScanScreen />
     </View>
   );
 }

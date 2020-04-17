@@ -9,7 +9,7 @@ const HomeScreen = ({navigation})=>{
         <Text style={styles.text}>Registra la tua bicicletta</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button2} onPress={()=>navigation.navigate('VisualizzaTokenTramiteQR')}>
+      <TouchableOpacity style={styles.button2} onPress={()=>navigation.navigate('Scan')}>
         <Text style={styles.text}>Scannerizza una Bicicletta</Text>
       </TouchableOpacity>
 

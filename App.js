@@ -12,6 +12,7 @@ import VisualizzaTokenTramiteQRScreen from './src/screens/VisualizzaTokenTramite
 import VisualizzaTokensByAddressScreen from './src/screens/VisualizzaTokensByAddressScreen';
 import TransitionScreen from './src/screens/TransitionScreen';
 import ChiSiamoScreen from './src/screens/ChiSiamoScreen';
+import ScanScreen from './src/screens/ScanScreen';
 
 const navigator = createStackNavigator({
     Address: AddressScreen,
@@ -21,6 +22,7 @@ const navigator = createStackNavigator({
     ModificaBicicletta: ModificaBiciclettaScreen,
     RegistrazioneBicicletta: RegistrazioneBiciclettaScreen,
     RegistrazioneUtente: RegistrazioneUtenteScreen,
+    Scan:ScanScreen,
     Transition:TransitionScreen,
     VisualizzaTokenTramiteQR:VisualizzaTokenTramiteQRScreen,
     VisualizzaTokensByAddress:VisualizzaTokensByAddressScreen
