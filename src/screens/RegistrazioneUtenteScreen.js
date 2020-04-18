@@ -1,14 +1,17 @@
-import React, {useState} from 'react'
+import React, {useState,useContext} from 'react'
 import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 import TextAndInput from '../components/TextAndInput';
+import {Context} from '../context/DBContext';
 
 const RegistrazioneUtenteScreen = ({navigation})=>{
+  const {state, verificautente} = useContext(Context);
   const [nome, setNome]=useState('');
   const [cognome, setCognome]=useState('');
   const [dataDiNascita, setDataDiNascita]=useState('');
   const [citta, setCitta]=useState('');
   const [indirizzo, setIndirizzo]=useState('');
   const [cap, setCap]=useState('');
+  const [email, setEmail] = useState('');
   const [walletAddress, setWalletAddress]=useState('');
 
   return (
@@ -20,18 +23,23 @@ const RegistrazioneUtenteScreen = ({navigation})=>{
       <TextAndInput testo="Città" variabile={citta} modificaVariabile={setCitta}/>
       <TextAndInput testo="Indirizzo" variabile={indirizzo} modificaVariabile={setIndirizzo}/>
       <TextAndInput testo="Cap" variabile={cap} modificaVariabile={setCap}/>
+      <TextAndInput testo="Email" variabile={email} modificaVariabile={setEmail}/>
       <TextAndInput testo="Wallet Address" variabile={walletAddress} modificaVariabile={setWalletAddress}/>
       <TouchableOpacity
         style={styles.button}
-        onPress={()=>navigation.navigate('RegistrazioneBicicletta',{
-          nome:nome,
-          cognome:cognome,
-          dataDiNascita:dataDiNascita,
-          citta:citta,
-          indirizzo:indirizzo,
-          cap:cap,
-          walletAddress:walletAddress,
-        })}>
+        onPress={()=>{
+          verificautente({walletAddress});
+          navigation.navigate('RegistrazioneBicicletta',{
+            nome:nome,
+            cognome:cognome,
+            dataDiNascita:dataDiNascita,
+            citta:citta,
+            indirizzo:indirizzo,
+            cap:cap,
+            email:email,
+            walletAddress:walletAddress,
+        }
+      )}}>
         <Text style={styles.textbutton}>Continua la registrazione</Text>
       </TouchableOpacity>
     </View>

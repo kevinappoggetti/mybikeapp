@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+//import DateTimePicker from '@react-native-community/datetimepicker';
 
 const TextAndInput = ({testo, variabile, modificaVariabile})=>{
   // const [date, setDate] = useState(new Date(1598051730000));

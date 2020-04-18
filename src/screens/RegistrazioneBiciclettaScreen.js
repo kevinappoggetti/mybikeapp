@@ -1,14 +1,17 @@
-import React,{useState} from 'react'
+import React,{useState, useContext} from 'react'
 import {View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
 import TextAndInput from '../components/TextAndInput';
+import {Context} from '../context/DBContext';
 
 const RegistrazioneBiciclettaScreen = ({navigation})=>{
+  const {state, inserisciutente} = useContext(Context);
   const nome = navigation.getParam('nome');
   const cognome = navigation.getParam('cognome');
   const dataDiNascita = navigation.getParam('dataDiNascita');
   const citta = navigation.getParam('citta');
   const indirizzo = navigation.getParam('indirizzo');
   const cap = navigation.getParam('cap');
+  const email = navigation.getParam('email');
   const walletAddress = navigation.getParam('walletAddress');
   const [marca,setMarca] = useState('');
   const [modello,setModello] = useState('');
@@ -22,6 +25,7 @@ const RegistrazioneBiciclettaScreen = ({navigation})=>{
   const [idBicicletta, setIdBicicletta] = useState('');
   const [password, setPassword]=useState('');
 
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Registrazione Bicicletta</Text>
@@ -31,12 +35,18 @@ const RegistrazioneBiciclettaScreen = ({navigation})=>{
       <TextAndInput testo="Tipo Bicicletta" variabile={tipologiaBicicletta} modificaVariabile={setTipologiaBicicletta}/>
       <TextAndInput testo="Foto Bicicletta" variabile={fotoBicicletta} modificaVariabile={setFotoBicicletta}/>
       <TextAndInput testo="Data D'Acquisto" variabile={dataDAcquisto} modificaVariabile={setDataDAcquisto}/>
-      <TextAndInput testo="Foto Data D'acquisto" variabile={fotoDataDAcquisto} modificaVariabile={setFotoDataDAcquisto}/>
-      <TextAndInput testo="Segni Particolari" variabile={segniParticolari} modificaVariabile={setSegniParticolari}/>
-      <TextAndInput testo="Foto Segni Particolari" variabile={fotoSegniParticolari} modificaVariabile={setFotoSegniParticolari}/>
-      <TextAndInput testo="Id Bicicletta" variabile={idBicicletta} modificaVariabile={setIdBicicletta}/>
-      <TextAndInput testo="Password" variabile={password} modificaVariabile={setPassword}/>
-      <TouchableOpacity style={styles.button}>
+
+      {state.utenteVerificato===true? null : <TextAndInput testo="Password" variabile={password} modificaVariabile={setPassword}/>}
+      <TouchableOpacity style={styles.button} onPress={()=>{
+          if(state.utenteVerificato==false){
+            inserisciutente({nome,cognome,dataDiNascita,citta,indirizzo,cap,email,walletAddress,password})
+            navigation.navigate('Home');
+          } else{
+            console.log("utente già registrato");
+            navigation.navigate('Home');
+          }
+        }
+      }>
         <Text style={styles.textbutton}>Registra la tua bicicletta!</Text>
       </TouchableOpacity>
     </View>

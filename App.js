@@ -13,6 +13,7 @@ import VisualizzaTokensByAddressScreen from './src/screens/VisualizzaTokensByAdd
 import TransitionScreen from './src/screens/TransitionScreen';
 import ChiSiamoScreen from './src/screens/ChiSiamoScreen';
 import ScanScreen from './src/screens/ScanScreen';
+import {Provider} from './src/context/DBContext';
 
 const navigator = createStackNavigator({
     Address: AddressScreen,
@@ -35,4 +36,11 @@ const navigator = createStackNavigator({
   }
 );
 
-export default createAppContainer(navigator);
+const App = createAppContainer(navigator);
+export default () =>{
+  return (
+    <Provider>
+      <App />
+    </Provider>
+  )
+}

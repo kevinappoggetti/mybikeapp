@@ -1,5 +1,6 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {View, Text, Button, StyleSheet} from 'react-native';
+import {Context} from '../context/DBContext';
 
 const ModificaBiciclettaScreen = ()=>{
   return (
