@@ -1,5 +1,5 @@
 import React,{useState, useContext} from 'react'
-import {View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, FlatList, StyleSheet} from 'react-native';
 import TextAndInput from '../components/TextAndInput';
 import {Context} from '../context/DBContext';
 
@@ -24,40 +24,102 @@ const RegistrazioneBiciclettaScreen = ({navigation})=>{
   const [fotoSegniParticolari, setFotoSegniParticolari] = useState('');
   const [idBicicletta, setIdBicicletta] = useState('');
   const [password, setPassword]=useState('');
+  const data = [
+    {testo:"Marca", variabile:marca, modificaVariabile:setMarca, id:'1'},
+    {testo:"Modello", variabile:modello, modificaVariabile:setModello, id:'2'},
+    {testo:"Telaio", variabile:telaio, modificaVariabile:setTelaio, id:'3'},
+    {testo:"Tipologia Bicicletta", variabile:tipologiaBicicletta, modificaVariabile:setTipologiaBicicletta, id:'4'},
+    {testo:"Foto Bicicletta", variabile:fotoBicicletta, modificaVariabile:setFotoBicicletta, id:'5'},
+    {testo:"Data D'Acquisto", variabile:dataDAcquisto, modificaVariabile:setDataDAcquisto, id:'6'},
+    {testo:"Foto Data D'Acquisto", variabile:fotoDataDAcquisto, modificaVariabile:setFotoDataDAcquisto, id:'7'},
+    {testo:"Segni Particolari", variabile:segniParticolari, modificaVariabile:setSegniParticolari, id:'8'},
+    {testo:"Foto Segni Particolari", variabile:fotoSegniParticolari, modificaVariabile:setFotoSegniParticolari, id:'9'},
+    {testo:"Id Bicicletta", variabile:idBicicletta, modificaVariabile:setIdBicicletta, id:'10'},
+    {testo:"Password", variabile:password, modificaVariabile:setPassword, id:'11'}
+  ];
+  const data2 = [
+    {testo:"Marca", variabile:marca, modificaVariabile:setMarca, id:'1'},
+    {testo:"Modello", variabile:modello, modificaVariabile:setModello, id:'2'},
+    {testo:"Telaio", variabile:telaio, modificaVariabile:setTelaio, id:'3'},
+    {testo:"Tipologia Bicicletta", variabile:tipologiaBicicletta, modificaVariabile:setTipologiaBicicletta, id:'4'},
+    {testo:"Foto Bicicletta", variabile:fotoBicicletta, modificaVariabile:setFotoBicicletta, id:'5'},
+    {testo:"Data D'Acquisto", variabile:dataDAcquisto, modificaVariabile:setDataDAcquisto, id:'6'},
+    {testo:"Foto Data D'Acquisto", variabile:fotoDataDAcquisto, modificaVariabile:setFotoDataDAcquisto, id:'7'},
+    {testo:"Segni Particolari", variabile:segniParticolari, modificaVariabile:setSegniParticolari, id:'8'},
+    {testo:"Foto Segni Particolari", variabile:fotoSegniParticolari, modificaVariabile:setFotoSegniParticolari, id:'9'},
+    {testo:"Id Bicicletta", variabile:idBicicletta, modificaVariabile:setIdBicicletta, id:'10'},
+  ];
+
+  if(state.utenteVerificato==false){
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Registrazione Bicicletta</Text>
+        <ScrollView>
+          <FlatList
+            data={data}
+            keyExtractor={item=>item.id}
+            renderItem={({item})=>(
+                <TextAndInput style={styles.list} testo={item.testo} variabile={item.variabile} modificaVariabile={item.modificaVariabile} />
+              )
+            }
+            ListFooterComponent={
+              <TouchableOpacity style={styles.button} onPress={()=>{
+                  if(state.utenteVerificato==false){
+                    inserisciutente({nome,cognome,dataDiNascita,citta,indirizzo,cap,email,walletAddress,password})
+                    navigation.navigate('Home');
+                  } else{
+                    console.log("utente già registrato");
+                    navigation.navigate('Home');
+                  }
+                }
+              }>
+                <Text style={styles.textbutton}>Registra la tua bicicletta!</Text>
+              </TouchableOpacity>
+            }
+          />
+        </ScrollView>
+      </View>
+    );
+  } else{
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Registrazione Bicicletta</Text>
+        <ScrollView>
+          <FlatList
+            data={data2}
+            keyExtractor={item=>item.id}
+            renderItem={({item})=>(
+                <TextAndInput style={styles.list} testo={item.testo} variabile={item.variabile} modificaVariabile={item.modificaVariabile} />
+              )
+            }
+            ListFooterComponent={
+              <TouchableOpacity style={styles.button} onPress={()=>{
+                  if(state.utenteVerificato==false){
+                    inserisciutente({nome,cognome,dataDiNascita,citta,indirizzo,cap,email,walletAddress,password})
+                    navigation.navigate('Home');
+                  } else{
+                    console.log("utente già registrato");
+                    navigation.navigate('Home');
+                  }
+                }
+              }>
+                <Text style={styles.textbutton}>Registra la tua bicicletta!</Text>
+              </TouchableOpacity>
+            }
+          />
+        </ScrollView>
+      </View>
+    );
+  }
 
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Registrazione Bicicletta</Text>
-      <TextAndInput testo="Marca" variabile={marca} modificaVariabile={setMarca}/>
-      <TextAndInput testo="Modello" variabile={modello} modificaVariabile={setModello}/>
-      <TextAndInput testo="Telaio" variabile={telaio} modificaVariabile={setTelaio}/>
-      <TextAndInput testo="Tipo Bicicletta" variabile={tipologiaBicicletta} modificaVariabile={setTipologiaBicicletta}/>
-      <TextAndInput testo="Foto Bicicletta" variabile={fotoBicicletta} modificaVariabile={setFotoBicicletta}/>
-      <TextAndInput testo="Data D'Acquisto" variabile={dataDAcquisto} modificaVariabile={setDataDAcquisto}/>
-
-      {state.utenteVerificato===true? null : <TextAndInput testo="Password" variabile={password} modificaVariabile={setPassword}/>}
-      <TouchableOpacity style={styles.button} onPress={()=>{
-          if(state.utenteVerificato==false){
-            inserisciutente({nome,cognome,dataDiNascita,citta,indirizzo,cap,email,walletAddress,password})
-            navigation.navigate('Home');
-          } else{
-            console.log("utente già registrato");
-            navigation.navigate('Home');
-          }
-        }
-      }>
-        <Text style={styles.textbutton}>Registra la tua bicicletta!</Text>
-      </TouchableOpacity>
-    </View>
-  );
 }
 
 const styles = StyleSheet.create({
   container:{
     backgroundColor:'rgba(29,161,242,0.7)',
     alignItems:'flex-end',
-    paddingRight:20,
+    // paddingRight:10,
     flex:1
   },
   title:{
@@ -73,13 +135,16 @@ const styles = StyleSheet.create({
     borderRadius:25,
     backgroundColor:'white',
     justifyContent:'center',
+    alignSelf:'center',
     borderWidth:3,
     borderColor:'#657786',
+    marginTop:50,
+    marginBottom:20
   },
   textbutton:{
     color:'#657786',
     fontSize:16,
-    textAlign:'center'
+    textAlign:'center',
   }
 });
 

@@ -36,7 +36,6 @@ const autenticazione = (dispatch)=>{
         dispatch({type:'add_error', payload:'login errato!'});
       }
     }catch(err){
-      console.log("Sono qui");
       dispatch({type:'add_error', payload:'login errato!'});
     }
   }

@@ -1,5 +1,5 @@
 import React, {useState,useContext} from 'react'
-import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TextInput, FlatList,ScrollView, TouchableOpacity, StyleSheet} from 'react-native';
 import TextAndInput from '../components/TextAndInput';
 import {Context} from '../context/DBContext';
 
@@ -13,35 +13,49 @@ const RegistrazioneUtenteScreen = ({navigation})=>{
   const [cap, setCap]=useState('');
   const [email, setEmail] = useState('');
   const [walletAddress, setWalletAddress]=useState('');
+  const data=[
+    {testo:"Nome", variabile:nome, modificaVariabile:setNome, id:'1'},
+    {testo:"Cognome", variabile:cognome, modificaVariabile:setCognome, id:'2'},
+    {testo:"Data Di Nascita", variabile:dataDiNascita, modificaVariabile:setDataDiNascita, id:'3'},
+    {testo:"Città", variabile:citta, modificaVariabile:setCitta, id:'4'},
+    {testo:"Indirizzo", variabile:indirizzo, modificaVariabile:setIndirizzo, id:'5'},
+    {testo:"Cap", variabile:cap, modificaVariabile:setCap, id:'6'},
+    {testo:"Email", variabile:email, modificaVariabile:setEmail, id:'7'},
+    {testo:"Wallet Address", variabile:walletAddress, modificaVariabile:setWalletAddress, id:'8'},
+  ]
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Inserisci i tuoi dati personali</Text>
-      <TextAndInput testo="Nome" variabile={nome} modificaVariabile={setNome}/>
-      <TextAndInput testo="Cognome" variabile={cognome} modificaVariabile={setCognome}/>
-      <TextAndInput testo="Data Di Nascita" variabile={dataDiNascita} modificaVariabile={setDataDiNascita}/>
-      <TextAndInput testo="Città" variabile={citta} modificaVariabile={setCitta}/>
-      <TextAndInput testo="Indirizzo" variabile={indirizzo} modificaVariabile={setIndirizzo}/>
-      <TextAndInput testo="Cap" variabile={cap} modificaVariabile={setCap}/>
-      <TextAndInput testo="Email" variabile={email} modificaVariabile={setEmail}/>
-      <TextAndInput testo="Wallet Address" variabile={walletAddress} modificaVariabile={setWalletAddress}/>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={()=>{
-          verificautente({walletAddress});
-          navigation.navigate('RegistrazioneBicicletta',{
-            nome:nome,
-            cognome:cognome,
-            dataDiNascita:dataDiNascita,
-            citta:citta,
-            indirizzo:indirizzo,
-            cap:cap,
-            email:email,
-            walletAddress:walletAddress,
+      <ScrollView>
+      <FlatList
+        keyboardDismissMode="none"
+        data={data}
+        keyExtractor={item=>item.id}
+        renderItem={({item})=>(
+            <TextAndInput style={styles.list} stile={'10'} testo={item.testo} variabile={item.variabile} modificaVariabile={item.modificaVariabile} />
+          )
         }
-      )}}>
-        <Text style={styles.textbutton}>Continua la registrazione</Text>
-      </TouchableOpacity>
+        ListFooterComponent={()=><TouchableOpacity
+          style={styles.button}
+          onPress={()=>{
+            verificautente({walletAddress});
+            navigation.navigate('RegistrazioneBicicletta',{
+              nome:nome,
+              cognome:cognome,
+              dataDiNascita:dataDiNascita,
+              citta:citta,
+              indirizzo:indirizzo,
+              cap:cap,
+              email:email,
+              walletAddress:walletAddress,
+          }
+        )}}>
+          <Text style={styles.textbutton}>Continua la registrazione</Text>
+        </TouchableOpacity>}
+      />
+      </ScrollView>
+
     </View>
   );
 }
@@ -74,6 +88,10 @@ const styles = StyleSheet.create({
     color:'#657786',
     fontSize:16,
     textAlign:'center'
+  },
+  list:{
+    flex: 1,
+     justifyContent: 'center',
   }
 });
 

@@ -2,6 +2,7 @@ import React,{useState, useContext} from 'react'
 import {View, Text, Button,TouchableOpacity, StyleSheet} from 'react-native';
 import TextAndInput from '../components/TextAndInput';
 import {Context} from '../context/DBContext';
+import {MaterialIcons} from '@expo/vector-icons'
 
 const AutenticazioneScreen = ({navigation})=>{
   const {state, autenticazione} = useContext(Context);
@@ -11,7 +12,14 @@ const AutenticazioneScreen = ({navigation})=>{
     <View style={styles.container}>
       <Text style={styles.title}>Inserisci la password del wallet</Text>
       <TextAndInput testo="Password" variabile={password} modificaVariabile={setPassword}/>
-      <Text>{state.errorMessage}</Text>
+
+      {state.errorMessage!='' ?
+      <View style={styles.errorContainer}>
+        <MaterialIcons style={styles.icon} name='error-outline' />
+        <Text style={styles.textErrore}>{state.errorMessage}</Text>
+      </View>
+      :null
+    }
 
       <TouchableOpacity style={styles.button} onPress={()=>{
         autenticazione({walletAddress, password});
@@ -21,6 +29,7 @@ const AutenticazioneScreen = ({navigation})=>{
       }}>
         <Text style={styles.textbutton}>Avanti!</Text>
       </TouchableOpacity>
+      <Button title="Modifica" onPress={()=>navigation.navigate('ModificaBicicletta')}/>
     </View>
   );
 }
@@ -53,7 +62,27 @@ const styles = StyleSheet.create({
     color:'#657786',
     fontSize:16,
     textAlign:'center'
+  },
+  errorContainer:{
+    borderColor:'#657786',
+    borderWidth: 5,
+    width:200,
+    alignSelf:'center',
+    marginTop:20,
+    flexDirection:'row',
+    borderRadius: 10,
+  },
+  icon:{
+    fontSize:30
+  },
+  textErrore:{
+    color:'white',
+    fontSize:16,
+    textAlign:'center',
+    paddingLeft:10,
+    paddingTop:3
   }
-});
+}
+);
 
 export default AutenticazioneScreen;
